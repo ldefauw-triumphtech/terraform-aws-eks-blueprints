@@ -31,7 +31,7 @@ locals {
   name = basename(path.cwd)
   # var.cluster_name is for Terratest
   cluster_name = coalesce(var.cluster_name, local.name)
-  region       = "us-west-2"
+  region       = "us-east-1"
 
   vpc_cidr = "10.0.0.0/16"
   azs      = slice(data.aws_availability_zones.available.names, 0, 3)
@@ -39,6 +39,7 @@ locals {
   tags = {
     Blueprint  = local.name
     GithubRepo = "github.com/aws-ia/terraform-aws-eks-blueprints"
+    map-migrated = "d-server-00y439h6a6rp0c"
   }
 }
 
