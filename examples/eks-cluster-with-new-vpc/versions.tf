@@ -16,6 +16,13 @@ terraform {
     }
   }
 
+  backend "s3" {
+    bucket = "bsel-larry-sandbox-bucket-3756"
+    key    = "terraform/eks-cluster-with-new-vpc/terraform.tfstate"
+    region = "us-east-1"
+  }
+
+
   # ##  Used for end-to-end testing on project; update to suit your needs
   # backend "s3" {
   #   bucket = "terraform-ssp-github-actions-state"
