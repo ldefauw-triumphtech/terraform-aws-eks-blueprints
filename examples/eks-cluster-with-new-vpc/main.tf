@@ -57,13 +57,22 @@ module "eks_blueprints" {
   private_subnet_ids = module.vpc.private_subnets
 
   managed_node_groups = {
-    mg_5 = {
-      node_group_name = "managed-ondemand"
-      instance_types  = ["m5.large"]
+    mg_t3 = {
+      node_group_name = "managed-spot-t3"
+      capacity_type   = "SPOT"
+      instance_types  = ["t3a.small", "t3.small", "t3a.medium", "t3.medium"]
       min_size        = 3
-      max_size        = 3
+      max_size        = 9
       desired_size    = 3
       subnet_ids      = module.vpc.private_subnets
+
+      # Launch template configuration. Must create one to add additional_tags.
+      create_launch_template = true        # false will use the default launch template. We want custom tags so create one.
+
+      # The global tags specified in "locals" do not propagate to the launch template, so we need to explicitly add it here.
+      additional_tags = {
+        map-migrated = "d-server-00y439h6a6rp0c"
+      }
     }
   }
 
